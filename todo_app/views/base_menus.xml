@@ -1,0 +1,5 @@
+<odoo>
+    <menuitem id="todo_app" name="Tickets"/>
+    <menuitem id="menu_todo_tickets_all" name="All Tickets" parent="todo_app" action="action_todo_tickets_all"/>
+    <menuitem id="menu_todo_tickets_my" name="My Tickets" parent="todo_app" action="action_todo_tickets_my"/>
+</odoo>
