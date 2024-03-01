@@ -1,0 +1,58 @@
+<odoo>
+    <data>
+        <!-- Tree View -->
+        <record id="view_ticket_tree" model="ir.ui.view">
+            <field name="name">todo.ticket.tree</field>
+            <field name="model">todo.ticket</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="number"/>
+                    <field name="tag"/>
+                    <field name="state"/>
+                    <field name="assign_to"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Form View -->
+        <record id="view_ticket_form" model="ir.ui.view">
+            <field name="name">todo.ticket.form</field>
+            <field name="model">todo.ticket</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="number"/>
+                            <field name="tag"/>
+                            <field name="state"/>
+                            <field name="assign_to"/>
+                            <field name="description"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Menu Items -->
+        <menuitem id="menu_todo_tickets" name="Tickets" parent="todo.menu_root"/>
+        <menuitem id="menu_todo_tickets_all" name="All Tickets" parent="menu_todo_tickets" action="action_todo_tickets_all"/>
+        <menuitem id="menu_todo_tickets_my" name="My Tickets" parent="menu_todo_tickets" action="action_todo_tickets_my"/>
+
+        <!-- Actions -->
+        <record id="action_todo_tickets_all" model="ir.actions.act_window">
+            <field name="name">All Tickets</field>
+            <field name="res_model">todo.ticket</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+        </record>
+
+        <record id="action_todo_tickets_my" model="ir.actions.act_window">
+            <field name="name">My Tickets</field>
+            <field name="res_model">todo.ticket</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('assign_to', '=', uid)]</field>
+        </record>
+    </data>
+</odoo>

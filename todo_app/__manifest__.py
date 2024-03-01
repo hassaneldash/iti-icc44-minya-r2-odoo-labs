@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': "Custom Todo App",
-    'summary': "Custom Todo App module",
+    'summary': "Custom Todo App to manage tasks",
     'description': "Lab 1 - Odoo",
     'aurthor': 'Hassan Mohamed ELDash',
     'category': "Productivity",
@@ -10,7 +10,7 @@
     'application': True,
     'installable': True,
     'data': [
-        # 'views/ticket.xml',
+        'views/ticket.xml',
         # 'menus/ticket.xml',
     ]
 }
