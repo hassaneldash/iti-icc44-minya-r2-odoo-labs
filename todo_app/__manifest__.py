@@ -11,6 +11,7 @@
     'installable': True,
     'data': [
         'views/ticket.xml',
-        # 'menus/ticket.xml',
+        'security/ir.model.access.csv',
+        'views/base_menus.xml'
     ]
 }
