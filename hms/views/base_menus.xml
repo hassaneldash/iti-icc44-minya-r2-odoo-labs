@@ -1,0 +1,4 @@
+<odoo>
+    <menuitem id="hms" name="Hospitals Management System"/>
+    <menuitem id="menu_hms_patient_all" name="All Patients" parent="hms" action="action_hms_patient_all"/>
+</odoo>
