@@ -1,7 +1,7 @@
 <odoo>
     <data>
-        <record id="view_patient_form" model="ir.ui.view">
-            <field name="name">hms.patient.form</field>
+        <record id="patient_form_view" model="ir.ui.view">
+            <field name="name">hms.patient.form.view</field>
             <field name="model">hms.patient</field>
             <field name="arch" type="xml">
                 <form>
@@ -10,8 +10,8 @@
                             <field name="first_name"/>
                             <field name="last_name"/>
                             <field name="birth_date"/>
-                            <field name="history" attrs="{'invisible': [('age', '&lt;', 50)]}"/>
-                            <field name="cr_ratio" attrs="{'required': [('pcr', '=', True)]}"/>
+                            <field name="history" invisible="[('age', '&lt;', 50)]"/>
+                            <field name="cr_ratio" required="context.get('pcr', False)"/>
                             <field name="blood_type"/>
                             <field name="pcr"/>
                             <field name="image"/>
@@ -19,15 +19,15 @@
                             <field name="age" readonly="1"/>
                             <field name="state"/>
                             <field name="department_id"/>
-                            <field name="doctor_ids" widget="many2many_tags" attrs="{'readonly': [('department_id', '=', False)]}"/>
+                            <field name="doctor_ids" widget="many2many_tags" readonly="[('department_id', '=', False)]"/>
                         </group>
                     </sheet>
                 </form>
             </field>
         </record>
 
-        <record id="view_patient_tree" model="ir.ui.view">
-            <field name="name">hms.patient.tree</field>
+        <record id="patient_tree_view" model="ir.ui.view">
+            <field name="name">hms.patient.tree.view</field>
             <field name="model">hms.patient</field>
             <field name="arch" type="xml">
                 <tree>
@@ -37,7 +37,6 @@
                 </tree>
             </field>
         </record>
-
 
         <record id="action_hms_patient_all" model="ir.actions.act_window">
             <field name="name">All Patients</field>

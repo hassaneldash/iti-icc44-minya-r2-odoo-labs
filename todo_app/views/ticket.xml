@@ -1,8 +1,8 @@
 <odoo>
     <data>
         <!-- Tree View -->
-        <record id="view_ticket_tree" model="ir.ui.view">
-            <field name="name">todo.ticket.tree</field>
+        <record id="ticket_tree_view" model="ir.ui.view">
+            <field name="name">todo.ticket.tree.view</field>
             <field name="model">todo.ticket</field>
             <field name="arch" type="xml">
                 <tree>
@@ -16,8 +16,8 @@
         </record>
 
         <!-- Form View -->
-        <record id="view_ticket_form" model="ir.ui.view">
-            <field name="name">todo.ticket.form</field>
+        <record id="ticket_form_view" model="ir.ui.view">
+            <field name="name">todo.ticket.form.view</field>
             <field name="model">todo.ticket</field>
             <field name="arch" type="xml">
                 <form>
