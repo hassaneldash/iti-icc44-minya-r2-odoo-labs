@@ -10,13 +10,16 @@
                             <field name="first_name"/>
                             <field name="last_name"/>
                             <field name="birth_date"/>
-                            <field name="history"/>
-                            <field name="cr_ratio"/>
+                            <field name="history" attrs="{'invisible': [('age', '&lt;', 50)]}"/>
+                            <field name="cr_ratio" attrs="{'required': [('pcr', '=', True)]}"/>
                             <field name="blood_type"/>
                             <field name="pcr"/>
                             <field name="image"/>
                             <field name="address"/>
-                            <field name="age"/>
+                            <field name="age" readonly="1"/>
+                            <field name="state"/>
+                            <field name="department_id"/>
+                            <field name="doctor_ids" widget="many2many_tags" attrs="{'readonly': [('department_id', '=', False)]}"/>
                         </group>
                     </sheet>
                 </form>
@@ -30,15 +33,11 @@
                 <tree>
                     <field name="first_name"/>
                     <field name="last_name"/>
-                    <field name="birth_date"/>
                     <field name="age"/>
                 </tree>
             </field>
         </record>
 
-
-        <menuitem id="hms" name="Hospitals Management System"/>
-        <menuitem id="menu_hms_patient_all" name="All Patients" parent="hms" action="action_hms_patient_all"/>
 
         <record id="action_hms_patient_all" model="ir.actions.act_window">
             <field name="name">All Patients</field>
