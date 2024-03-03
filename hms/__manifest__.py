@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 {
     'name': "Hopital Management System",
-    'summary': "Hopital Management System to manage Patients",
-    'description': "Lab 2 - Odoo",
+    'summary': "Hopital Management System to manage patients, doctors, departments and logs",
+    'description': "Lab 2,3 - Odoo",
     'aurthor': 'Hassan Mohamed ELDash',
     'category': "Administration",
     'version': "17.0.0.1.0",
