@@ -1,4 +1,8 @@
 <odoo>
     <menuitem id="menu_hms" name="HMS"/>
     <menuitem id="menu_root_item" name="HMS"/>
+    <menuitem id="menu_hms_department_all" name="All Departments" parent="menu_root_item"
+              action="action_hms_department_all"/>
+    <menuitem id="menu_hms_doctor_all" name="All Doctors" parent="menu_root_item" action="action_hms_doctor_all"/>
+    <menuitem id="menu_hms_patient_all" name="All Patients" parent="menu_root_item" action="action_hms_patient_all"/>
 </odoo>

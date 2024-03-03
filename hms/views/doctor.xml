@@ -1,7 +1,7 @@
 <odoo>
     <data>
         <record id="doctor_form_view" model="ir.ui.view">
-            <field name="name">hms.doctor.form</field>
+            <field name="name">hms.doctor.form.view</field>
             <field name="model">hms.doctor</field>
             <field name="arch" type="xml">
                 <form>
@@ -17,7 +17,7 @@
         </record>
 
         <record id="doctor_tree_view" model="ir.ui.view">
-            <field name="name">hms.doctor.tree</field>
+            <field name="name">hms.doctor.tree.view</field>
             <field name="model">hms.doctor</field>
             <field name="arch" type="xml">
                 <tree>
@@ -28,14 +28,12 @@
             </field>
         </record>
 
-<!--        <menuitem id="menu_hms_doctor" name="Doctors" parent="menu_root_item" action="action_doctor_form"/>-->
 
-
-        <record id="action_doctor_form" model="ir.actions.act_window">
-            <field name="name">Doctors</field>
+        <record id="action_hms_doctor_all" model="ir.actions.act_window">
+            <field name="name">All Doctors</field>
             <field name="res_model">hms.doctor</field>
-            <field name="view_mode">form,tree</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
         </record>
-
     </data>
 </odoo>

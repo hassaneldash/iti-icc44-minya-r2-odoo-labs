@@ -29,13 +29,11 @@
         </record>
 
 
-<!--        <menuitem id="menu_hms_department" name="Departments" parent="menu_root_item" action="action_department_form"/>-->
-
-        <record id="action_department_form" model="ir.actions.act_window">
-            <field name="name">Departments</field>
+        <record id="action_hms_department_all" model="ir.actions.act_window">
+            <field name="name">All Departments</field>
             <field name="res_model">hms.department</field>
-            <field name="view_mode">form,tree</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
         </record>
-
     </data>
 </odoo>
