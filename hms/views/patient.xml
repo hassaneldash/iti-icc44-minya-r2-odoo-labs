@@ -43,8 +43,6 @@
             </field>
         </record>
 
-        <menuitem id="menu_hms_patient_all" name="All Patients" parent="menu_root_item"
-                  action="action_hms_patient_all"/>
 
         <record id="action_hms_patient_all" model="ir.actions.act_window">
             <field name="name">All Patients</field>
@@ -52,5 +50,8 @@
             <field name="view_mode">tree,form</field>
             <field name="domain">[]</field>
         </record>
+
+        <menuitem id="menu_hms_patient_all" name="All Patients" parent="menu_root_patient"
+                  action="action_hms_patient_all"/>
     </data>
 </odoo>

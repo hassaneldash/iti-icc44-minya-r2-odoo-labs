@@ -1,6 +1,6 @@
 <odoo>
     <menuitem id="menu_hms" name="HMS"/>
-    <menuitem id="menu_root_patient" name="Patients"/>
-    <menuitem id="menu_root_doctor" name="Doctors"/>
     <menuitem id="menu_root_department" name="Departments"/>
+    <menuitem id="menu_root_doctor" name="Doctors"/>
+    <menuitem id="menu_root_patient" name="Patients"/>
 </odoo>

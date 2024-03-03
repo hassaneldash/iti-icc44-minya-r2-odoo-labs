@@ -10,10 +10,12 @@
     'application': True,
     'installable': True,
     'data': [
+        # data/data.xml
         'security/ir.model.access.csv',
         'views/base_menus.xml',
-        'views/patient.xml',
         'views/department.xml',
         'views/doctor.xml',
+        'views/patient.xml',
+        # wizrd/wizard.xml
     ]
 }

@@ -10,15 +10,11 @@
                             <field name="name"/>
                             <field name="capacity"/>
                             <field name="is_opened"/>
-                            <field name="patient_count" string="Patients"/>
                         </group>
                     </sheet>
                 </form>
             </field>
         </record>
-
-        <menuitem id="menu_hms_department_all" name="All Departments" parent="menu_root_item"
-                  action="action_hms_department_all"/>
 
         <record id="department_tree_view" model="ir.ui.view">
             <field name="name">hms.department.tree.view</field>
@@ -28,7 +24,6 @@
                     <field name="name"/>
                     <field name="capacity"/>
                     <field name="is_opened"/>
-                    <field name="patient_count" string="Patients"/>
                 </tree>
             </field>
         </record>
@@ -40,5 +35,8 @@
             <field name="view_mode">tree,form</field>
             <field name="domain">[]</field>
         </record>
+
+        <menuitem id="menu_hms_department_all" name="All Departments" parent="menu_root_department"
+                  action="action_hms_department_all"/>
     </data>
 </odoo>

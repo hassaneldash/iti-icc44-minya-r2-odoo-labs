@@ -28,7 +28,6 @@
             </field>
         </record>
 
-        <menuitem id="menu_hms_doctor_all" name="All Doctors" parent="menu_root_item" action="action_hms_doctor_all"/>
 
         <record id="action_hms_doctor_all" model="ir.actions.act_window">
             <field name="name">All Doctors</field>
@@ -36,5 +35,7 @@
             <field name="view_mode">tree,form</field>
             <field name="domain">[]</field>
         </record>
+
+        <menuitem id="menu_hms_doctor_all" name="All Doctors" parent="menu_root_doctor" action="action_hms_doctor_all"/>
     </data>
 </odoo>

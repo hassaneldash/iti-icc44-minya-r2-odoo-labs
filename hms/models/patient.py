@@ -8,9 +8,9 @@ class Patient(models.Model):
     _name = 'hms.patient'
     _description = 'Hospitals Management System Patient'
 
-    first_name = fields.Char()
-    last_name = fields.Char()
-    birth_date = fields.Date()
+    first_name = fields.Char(required=True)
+    last_name = fields.Char(required=True)
+    birth_date = fields.Date(required=True)
     # history = fields.Html(string='History')
     cr_ratio = fields.Float(string='CR Ratio')
     blood_type = fields.Selection(
@@ -62,7 +62,7 @@ class Patient(models.Model):
     #         elif patient.state == 'serious':
     #             patient.history_log = 'Patient state is serious.'
 
-    @api.onchange('age')
+    @api.onchange('birth_date')
     def _onchange_pcr(self):
         if self.age < 30:
             self.pcr = True
