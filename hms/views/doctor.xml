@@ -15,10 +15,27 @@
                 </form>
             </field>
         </record>
+
+        <record id="doctor_tree_view" model="ir.ui.view">
+            <field name="name">hms.doctor.tree</field>
+            <field name="model">hms.doctor</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="first_name"/>
+                    <field name="last_name"/>
+                    <field name="image"/>
+                </tree>
+            </field>
+        </record>
+
+<!--        <menuitem id="menu_hms_doctor" name="Doctors" parent="menu_root_item" action="action_doctor_form"/>-->
+
+
         <record id="action_doctor_form" model="ir.actions.act_window">
             <field name="name">Doctors</field>
             <field name="res_model">hms.doctor</field>
-            <field name="view_mode">tree,form</field>
+            <field name="view_mode">form,tree</field>
         </record>
+
     </data>
 </odoo>

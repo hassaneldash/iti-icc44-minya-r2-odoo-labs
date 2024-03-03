@@ -1,5 +1,7 @@
+from dateutil.relativedelta import relativedelta
 from odoo import models, fields, api
 from datetime import datetime
+from odoo.exceptions import ValidationError
 
 
 class Patient(models.Model):
@@ -25,15 +27,6 @@ class Patient(models.Model):
         string='State',
         default='undetermined',
         track_visibility='onchange')
-
-    # def _compute_age(self):
-    #     today = datetime.today()
-    #     for patient in self:
-    #         if patient.birth_date:
-    #             birth_date = datetime.strptime(patient.birth_date, '%Y-%m-%d')
-    #             age = today.year - birth_date.year - ((today.month, today.day) < (birth_date.month, birth_date.day))
-    #             patient.age = age
-
     department_id = fields.Many2one('hms.department', string='Department', required=True)
     doctor_ids = fields.Many2many('hms.doctor', string='Doctors', readonly=True)
 
@@ -41,10 +34,9 @@ class Patient(models.Model):
     def _compute_age(self):
         for patient in self:
             if patient.birth_date:
-                birth_date = fields.Date.from_string(patient.birth_date)
-                today = fields.Date.today()
-                age = today.year - birth_date.year - ((today.month, today.day) < (birth_date.month, birth_date.day))
-                patient.age = age
+                patient.age = relativedelta(fields.Date.today(), patient.birth_date).years
+            else:
+                patient.age = False
 
     @api.depends('age')
     def _compute_history(self):
@@ -54,9 +46,17 @@ class Patient(models.Model):
             else:
                 patient.history = patient._compute_log_history()
 
-    def _compute_log_history(self):
-        # Logic to compute patient history log
-        return "Patient history log"
+    @api.depends('state')
+    def _compute_history_log(self):
+        for patient in self:
+            if patient.state == 'undetermined':
+                patient.history_log = 'Patient state is undetermined.'
+            elif patient.state == 'good':
+                patient.history_log = 'Patient state is good.'
+            elif patient.state == 'fair':
+                patient.history_log = 'Patient state is fair.'
+            elif patient.state == 'serious':
+                patient.history_log = 'Patient state is serious.'
 
     @api.onchange('age')
     def _onchange_pcr(self):
@@ -80,7 +80,7 @@ class Patient(models.Model):
     def _check_department_is_opened(self):
         for patient in self:
             if patient.department_id and not patient.department_id.is_opened:
-                raise exceptions.ValidationError('You cannot choose a closed department.')
+                raise ValidationError('You cannot choose a closed department.')
 
     @api.onchange('department_id')
     def _onchange_department_id(self):
@@ -92,7 +92,7 @@ class Patient(models.Model):
     def _onchange_pcr(self):
         for patient in self:
             if patient.pcr and not patient.cr_ratio:
-                raise exceptions.ValidationError('CR Ratio is mandatory when PCR is checked.')
+                raise ValidationError('CR Ratio is mandatory when PCR is checked.')
 
     @api.onchange('age')
     def _onchange_age(self):
@@ -102,5 +102,5 @@ class Patient(models.Model):
             else:
                 patient.history = patient._compute_log_history()
             if patient.age < 30:
-                raise Warning('PCR is automatically checked because the age is lower than 30.')
                 patient.pcr = True
+                raise Warning('PCR is automatically checked because the age is lower than 30.')

@@ -1,7 +1,4 @@
 <odoo>
-    <data>
-        <menuitem id="menu_hms" name="Hospitals Management System"/>
-        <menuitem id="menu_hms_department" name="Departments" parent="menu_hms" action="action_department_form"/>
-        <menuitem id="menu_hms_doctor" name="Doctors" parent="menu_hms" action="action_doctor_form"/>
-    </data>
+    <menuitem id="menu_hms" name="HMS"/>
+    <menuitem id="menu_root_item" name="HMS"/>
 </odoo>
