@@ -11,12 +11,12 @@ class Patient(models.Model):
     first_name = fields.Char(required=True)
     last_name = fields.Char(required=True)
     birth_date = fields.Date(required=True)
-    # history = fields.Html(string='History')
+    history = fields.Html(string='History')
     cr_ratio = fields.Float(string='CR Ratio')
     blood_type = fields.Selection(
         [('a', 'A'), ('b', 'B'), ('ab', 'AB'), ('o', 'O')], required=True)
-    # rhesus_protein = fields.Selection(
-    #     [('positive', '+'), ('negative', '-')], required=True)
+    rhesus_protein = fields.Selection(
+        [('positive', '+'), ('negative', '-')], required=True)
     pcr = fields.Boolean(string='PCR')
     image = fields.Binary(string='Image')
     address = fields.Text(string='Address')
@@ -27,8 +27,8 @@ class Patient(models.Model):
         ('fair', 'Fair'),
         ('serious', 'Serious')],
         string='State',
-        default='undetermined', required=True
-        # track_visibility='onchange'
+        default='undetermined', required=True,
+        track_visibility='onchange'
     )
     department_id = fields.Many2one('hms.department', string='Department', required=True)
     department_capacity = fields.Integer(string='Department Capacity', related='department_id.capacity', store=True)

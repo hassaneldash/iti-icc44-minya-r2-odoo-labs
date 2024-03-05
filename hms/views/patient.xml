@@ -10,10 +10,10 @@
                             <field name="first_name"/>
                             <field name="last_name"/>
                             <field name="birth_date"/>
-                            <!--                            <field name="history" invisible="[('age', '&lt;', 50)]"/>-->
+                            <field name="history" invisible="[('age', '&lt;', 50)]"/>
                             <field name="cr_ratio" required="context.get('pcr', False)"/>
                             <field name="blood_type"/>
-                            <!--                            <field name="rhesus_protein"/>-->
+                            <field name="rhesus_protein"/>
                             <field name="pcr"/>
                             <field name="image"/>
                             <field name="address"/>
