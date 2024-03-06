@@ -31,12 +31,6 @@
                             <field name="department_id"/>
                             <field name="department_capacity"/>
                             <field name="doctor_ids"/>
-
-                            <tree string="History">
-                                <field name="created_by"/>
-                                <field name="create_date"/>
-                                <field name="description"/>
-                            </tree>
                         </group>
                     </sheet>
                 </form>

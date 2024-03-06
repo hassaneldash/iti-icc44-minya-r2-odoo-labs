@@ -16,7 +16,7 @@
         'views/department.xml',
         'views/doctor.xml',
         'views/patient.xml',
-        'views/partner.xml',
-        'wizrd/wizard.xml'
+        # 'views/partner.xml',
+        'wizard/wizard.xml'
     ]
 }

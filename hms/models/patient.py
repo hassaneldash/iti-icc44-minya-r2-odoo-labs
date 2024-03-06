@@ -34,7 +34,8 @@ class Patient(models.Model):
     department_id = fields.Many2one('hms.department', string='Department', required=True)
     department_capacity = fields.Integer(string='Department Capacity', related='department_id.capacity', store=True)
     doctor_ids = fields.Many2many('hms.doctor', string='Doctors', readonly=True)
-
+    log_ids = fields.One2many('hms.patient.log', 'patient_id', string='Log History', readonly=True)
+    
     @api.depends('birth_date')
     def _compute_age(self):
         for patient in self:
@@ -145,3 +146,6 @@ class Patient(models.Model):
                 existing_patient = self.env['hms.patient'].search([('email', '=', patient.email), ('id', '!=', patient.id)])
                 if existing_patient:
                     raise ValidationError("Email address must be unique.")
+
+
+
