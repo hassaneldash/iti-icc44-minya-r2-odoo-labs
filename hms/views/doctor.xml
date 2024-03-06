@@ -9,7 +9,7 @@
                         <group>
                             <field name="first_name"/>
                             <field name="last_name"/>
-                            <field name="image"/>
+                            <field name="image" widget="image" options="{'preview_image': true}" width="100" height="100"/>
                             <field name="patient_ids"/>
                         </group>
                     </sheet>
@@ -24,7 +24,7 @@
                 <tree>
                     <field name="first_name"/>
                     <field name="last_name"/>
-                    <field name="image"/>
+                    <field name="image" widget="image" options="{'preview_image': true}" width="100" height="100"/>
                     <field name="patient_ids"/>
                 </tree>
             </field>

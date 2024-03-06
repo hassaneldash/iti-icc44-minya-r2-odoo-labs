@@ -1,7 +1,7 @@
 from dateutil.relativedelta import relativedelta
 from odoo import models, fields, api
 from datetime import datetime
-from odoo.exceptions import ValidationError
+from odoo.exceptions import ValidationError, UserError
 
 
 class Patient(models.Model):
@@ -61,6 +61,12 @@ class Patient(models.Model):
             self.pcr = True
             raise Warning('PCR is automatically checked because the age is lower than 30.')
 
+    def action_add_log(self):
+        try:
+            return self.env['ir.actions.actions']._for_xml_id('hms.action_log_wizard')
+        except Exception:
+            raise UserError("Failed to load the log wizard. Please contact your system administrator.")
+
     @api.onchange('state')
     def _onchange_state(self):
         for patient in self:
@@ -84,28 +90,47 @@ class Patient(models.Model):
             if patient.department_id and not patient.department_id.is_opened:
                 raise ValidationError('You cannot choose a closed department.')
 
-    # @api.onchange('department_id')
-    # def _onchange_department_id(self):
-    #     for patient in self:
-    #         if patient.department_id:
-    #             patient.doctor_ids = [(6, 0, patient.department_id.doctor_ids.ids)]
+    @api.onchange('department_id')
+    def _onchange_department_id(self):
+        for patient in self:
+            if patient.department_id:
+                self.doctor_ids = [(6, 0, [])]
+                self.doctor_ids = [(4, doctor.id) for doctor in self.department_id.doctor_ids]
+
+    def action_undetermined(self):
+        for rec in self:
+            rec.state = 'undetermined'
+
+    def action_good(self):
+        for rec in self:
+            rec.state = 'good'
+
+    def action_fair(self):
+        for rec in self:
+            rec.state = 'fair'
+
+    def action_serious(self):
+        for rec in self:
+            rec.state = 'serious'
+
+    def write(self, vals):
+        old_state = self.state
+        res = super(Patient, self).write(vals)
+        if 'state' in vals and vals['state'] != old_state:
+            state_field = self._fields['state']
+            new_state_label = dict(state_field.selection).get(vals['state'])
+            self.log_ids.create({
+                'patient_id': self.id,
+                'created_by': self.env.user.id,
+                'description': f"State changed to {new_state_label}"
+            })
+        return res
 
     @api.onchange('pcr')
     def _onchange_pcr(self):
         for patient in self:
             if patient.pcr and not patient.cr_ratio:
                 raise ValidationError('CR Ratio is mandatory when PCR is checked.')
-
-    # @api.onchange('age')
-    # def _onchange_age(self):
-    #     for patient in self:
-    #         if patient.age < 50:
-    #             patient.history = False
-    #         else:
-    #             patient.history = patient._compute_log_history()
-    #         if patient.age < 30:
-    #             patient.pcr = True
-    #             raise Warning('PCR is automatically checked because the age is lower than 30.')
 
     @api.constrains('email')
     def _check_valid_email(self):
@@ -120,30 +145,3 @@ class Patient(models.Model):
                 existing_patient = self.env['hms.patient'].search([('email', '=', patient.email), ('id', '!=', patient.id)])
                 if existing_patient:
                     raise ValidationError("Email address must be unique.")
-
-#
-# class CRMCustomer(models.Model):
-#     _inherit = 'crm.customer'
-#
-#     related_patient_id = fields.Many2one('hms.patient', string='Related Patient', domain="[('is_patient', '=', True)]", groups="base.group_user")
-#
-#     @api.onchange('related_patient_id')
-#     def _onchange_related_patient_id(self):
-#         if self.related_patient_id:
-#             self.email = self.related_patient_id.email
-#
-#     @api.constrains('email')
-#     def _check_unique_email(self):
-#         for customer in self:
-#             if customer.email:
-#                 existing_patient = self.env['hms.patient'].search([('email', '=', customer.email)])
-#                 if existing_patient:
-#                     raise ValidationError("Email address must be unique.")
-#
-#     @api.constrains('related_patient_id')
-#     def _check_linked_patient(self):
-#         for customer in self:
-#             if customer.related_patient_id:
-#                 linked_patient = customer.related_patient_id
-#                 if linked_patient.customer_ids and customer not in linked_patient.customer_ids:
-#                     raise ValidationError("Cannot unlink a customer linked to a patient.")

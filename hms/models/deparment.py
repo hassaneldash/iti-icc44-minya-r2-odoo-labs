@@ -9,3 +9,4 @@ class Department(models.Model):
     capacity = fields.Integer()
     is_opened = fields.Boolean()
     patients = fields.One2many('hms.patient', 'department_id')
+    doctors = fields.Many2many('hms.doctor')

@@ -6,7 +6,7 @@
     'aurthor': 'Hassan Mohamed ELDash',
     'category': "Administration",
     'version': "17.0.0.1.0",
-    'depends': ['base'],
+    'depends': ['base', 'crm'],
     'application': True,
     'installable': True,
     'data': [
@@ -16,6 +16,7 @@
         'views/department.xml',
         'views/doctor.xml',
         'views/patient.xml',
-        # wizrd/wizard.xml
+        'views/partner.xml',
+        'wizrd/wizard.xml'
     ]
 }

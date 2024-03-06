@@ -3,5 +3,4 @@
     <menuitem id="menu_root_department" name="Departments"/>
     <menuitem id="menu_root_doctor" name="Doctors"/>
     <menuitem id="menu_root_patient" name="Patients"/>
-    <menuitem id="menu_root_customer" name="Partners"/>
 </odoo>

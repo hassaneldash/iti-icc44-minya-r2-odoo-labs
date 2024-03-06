@@ -5,6 +5,15 @@
             <field name="model">hms.patient</field>
             <field name="arch" type="xml">
                 <form>
+                    <header>
+                        <button name="action_add_log" type="object" class="btn-info" string="Add New Log"/>
+                        <button name="action_undetermined" type="object" class="btn-primary" string="Undetermined"/>
+                        <button name="action_good" type="object" class="btn-success" string="Good"/>
+                        <button name="action_fair" type="object" class="btn-warning" string="Fair"/>
+                        <button name="action_serious" type="object" class="btn-danger" string="Serious"/>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+
                     <sheet>
                         <group>
                             <field name="first_name"/>
@@ -22,6 +31,12 @@
                             <field name="department_id"/>
                             <field name="department_capacity"/>
                             <field name="doctor_ids"/>
+
+                            <tree string="History">
+                                <field name="created_by"/>
+                                <field name="create_date"/>
+                                <field name="description"/>
+                            </tree>
                         </group>
                     </sheet>
                 </form>
@@ -38,6 +53,12 @@
                     <field name="age"/>
                     <field name="department_id"/>
                     <field name="department_capacity"/>
+                    <field name="doctor_ids"/>
+                    <field name="state" widget="badge"
+                           decoration-primary="state == 'undetermined'"
+                           decoration-success="state == 'good'"
+                           decoration-warning="state == 'fair'"
+                           decoration-danger="state == 'serious'"/>
                 </tree>
             </field>
         </record>
