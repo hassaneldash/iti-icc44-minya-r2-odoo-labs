@@ -63,10 +63,10 @@ class Patient(models.Model):
 
     @api.onchange('state')
     def _onchange_state(self):
-        self._create_log_record()
         for patient in self:
             if patient.age > 50:
                 patient.history = patient._compute_log_history()
+                self._create_log_record()
             else:
                 patient.history = False
 
@@ -112,3 +112,38 @@ class Patient(models.Model):
         for patient in self:
             if patient.email and '@' not in patient.email:
                 raise ValidationError("Invalid email address")
+
+    @api.constrains('email')
+    def _check_unique_email(self):
+        for patient in self:
+            if patient.email:
+                existing_patient = self.env['hms.patient'].search([('email', '=', patient.email), ('id', '!=', patient.id)])
+                if existing_patient:
+                    raise ValidationError("Email address must be unique.")
+
+#
+# class CRMCustomer(models.Model):
+#     _inherit = 'crm.customer'
+#
+#     related_patient_id = fields.Many2one('hms.patient', string='Related Patient', domain="[('is_patient', '=', True)]", groups="base.group_user")
+#
+#     @api.onchange('related_patient_id')
+#     def _onchange_related_patient_id(self):
+#         if self.related_patient_id:
+#             self.email = self.related_patient_id.email
+#
+#     @api.constrains('email')
+#     def _check_unique_email(self):
+#         for customer in self:
+#             if customer.email:
+#                 existing_patient = self.env['hms.patient'].search([('email', '=', customer.email)])
+#                 if existing_patient:
+#                     raise ValidationError("Email address must be unique.")
+#
+#     @api.constrains('related_patient_id')
+#     def _check_linked_patient(self):
+#         for customer in self:
+#             if customer.related_patient_id:
+#                 linked_patient = customer.related_patient_id
+#                 if linked_patient.customer_ids and customer not in linked_patient.customer_ids:
+#                     raise ValidationError("Cannot unlink a customer linked to a patient.")
