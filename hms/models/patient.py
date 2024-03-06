@@ -11,6 +11,7 @@ class Patient(models.Model):
     first_name = fields.Char(required=True)
     last_name = fields.Char(required=True)
     birth_date = fields.Date(required=True)
+    email = fields.Char(string='Email', unique=True)
     history = fields.Html(string='History')
     cr_ratio = fields.Float(string='CR Ratio')
     blood_type = fields.Selection(
@@ -42,14 +43,6 @@ class Patient(models.Model):
             else:
                 patient.age = False
 
-    @api.depends('age')
-    def _compute_history(self):
-        for patient in self:
-            if patient.age < 50:
-                patient.history = False
-            else:
-                patient.history = patient._compute_log_history()
-
     @api.depends('state')
     def _compute_history_log(self):
         for patient in self:
@@ -71,6 +64,11 @@ class Patient(models.Model):
     @api.onchange('state')
     def _onchange_state(self):
         self._create_log_record()
+        for patient in self:
+            if patient.age > 50:
+                patient.history = patient._compute_log_history()
+            else:
+                patient.history = False
 
     def _create_log_record(self):
         log_description = f'State changed to {self.state.upper()}'
@@ -86,11 +84,11 @@ class Patient(models.Model):
             if patient.department_id and not patient.department_id.is_opened:
                 raise ValidationError('You cannot choose a closed department.')
 
-    @api.onchange('department_id')
-    def _onchange_department_id(self):
-        for patient in self:
-            if patient.department_id:
-                patient.doctor_ids = [(6, 0, patient.department_id.doctor_ids.ids)]
+    # @api.onchange('department_id')
+    # def _onchange_department_id(self):
+    #     for patient in self:
+    #         if patient.department_id:
+    #             patient.doctor_ids = [(6, 0, patient.department_id.doctor_ids.ids)]
 
     @api.onchange('pcr')
     def _onchange_pcr(self):
@@ -98,13 +96,19 @@ class Patient(models.Model):
             if patient.pcr and not patient.cr_ratio:
                 raise ValidationError('CR Ratio is mandatory when PCR is checked.')
 
-    @api.onchange('age')
-    def _onchange_age(self):
+    # @api.onchange('age')
+    # def _onchange_age(self):
+    #     for patient in self:
+    #         if patient.age < 50:
+    #             patient.history = False
+    #         else:
+    #             patient.history = patient._compute_log_history()
+    #         if patient.age < 30:
+    #             patient.pcr = True
+    #             raise Warning('PCR is automatically checked because the age is lower than 30.')
+
+    @api.constrains('email')
+    def _check_valid_email(self):
         for patient in self:
-            if patient.age < 50:
-                patient.history = False
-            else:
-                patient.history = patient._compute_log_history()
-            if patient.age < 30:
-                patient.pcr = True
-                raise Warning('PCR is automatically checked because the age is lower than 30.')
+            if patient.email and '@' not in patient.email:
+                raise ValidationError("Invalid email address")

@@ -10,7 +10,7 @@
                             <field name="first_name"/>
                             <field name="last_name"/>
                             <field name="birth_date"/>
-                            <field name="history" invisible="[('age', '&lt;', 50)]"/>
+                            <field name="history"/>
                             <field name="cr_ratio" required="context.get('pcr', False)"/>
                             <field name="blood_type"/>
                             <field name="rhesus_protein"/>
@@ -21,8 +21,7 @@
                             <field name="state"/>
                             <field name="department_id"/>
                             <field name="department_capacity"/>
-                            <!--                            <field name="doctor_ids" widget="many2many_tags"-->
-                            <!--                                   readonly="[('department_id', '=', False)]"/>-->
+                            <field name="doctor_ids"/>
                         </group>
                     </sheet>
                 </form>

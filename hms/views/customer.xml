@@ -1,0 +1,61 @@
+<odoo>
+    <!-- Extend customer tree view to show website -->
+    <record id="view_res_partner_tree_inherit" model="ir.ui.view">
+        <field name="name">res.partner.tree.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='phone']" position="after">
+                <field name="website"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Make the Tax ID field mandatory for CRM Customers -->
+    <record id="view_res_partner_form_inherit" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='zip']" position="before">
+                <field name="vat" required="1"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Add the Related Patient field to the customer form view -->
+    <record id="view_res_partner_form_misc_group_inherit" model="ir.ui.view">
+        <field name="name">res.partner.form.misc.group.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='sale_purchase']" position="inside">
+                <field name="related_patient_id"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Define Customer Tree View -->
+    <record id="view_res_partner_tree_inherit" model="ir.ui.view">
+        <field name="name">res.partner.tree.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="website"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Define Customer Form View -->
+    <record id="view_res_partner_form_inherit" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet" position="inside">
+                <!-- Add or modify fields in the form view -->
+            </xpath>
+        </field>
+    </record>
+</odoo>

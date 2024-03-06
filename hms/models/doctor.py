@@ -8,3 +8,4 @@ class Doctor(models.Model):
     first_name = fields.Char(required=True)
     last_name = fields.Char(required=True)
     image = fields.Binary()
+    patient_ids = fields.Many2many('hms.patient', string="Patients")

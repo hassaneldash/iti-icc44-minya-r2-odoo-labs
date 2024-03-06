@@ -10,6 +10,7 @@
                             <field name="first_name"/>
                             <field name="last_name"/>
                             <field name="image"/>
+                            <field name="patient_ids"/>
                         </group>
                     </sheet>
                 </form>
@@ -24,6 +25,7 @@
                     <field name="first_name"/>
                     <field name="last_name"/>
                     <field name="image"/>
+                    <field name="patient_ids"/>
                 </tree>
             </field>
         </record>
